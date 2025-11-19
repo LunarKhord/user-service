@@ -1,11 +1,63 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# ----------------------------------------------------------------------
+# 1. Virtual Environment Directories (uv, venv, poetry)
+# ----------------------------------------------------------------------
+# Python Virtual Environments (Standard)
+venv/
+.venv/
+# uv and standard venv location
+.site-audit-ai-be/ # Based on your previous context
+env/
+ENV/
+.env/
 
-# Virtual environments
-.venv
+# Package manager lock files (uv, pip-tools, etc.)
+# Include lock files if you manage dependencies manually, otherwise ignore.
+# If using 'uv' or 'pip-tools' for lock files, you might want to INCLUDE them, 
+# but for safety, we ignore common temporary lock artifacts.
+*.lock
+
+# ----------------------------------------------------------------------
+# 2. Python Specific Files & Artifacts
+# ----------------------------------------------------------------------
+# Compiled Python files
+*.pyc
+__pycache__/
+*.pyd
+*.so
+
+# Installer and distribution artifacts
+*.egg-info/
+dist/
+build/
+
+# Testing and Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.nox/
+
+# ----------------------------------------------------------------------
+# 3. Editor/OS Artifacts
+# ----------------------------------------------------------------------
+# Editor specific files (VS Code, Sublime, vim, etc.)
+.vscode/
+.idea/
+
+# OS generated files (macOS, Windows)
+.DS_Store
+Thumbs.db
+
+# ----------------------------------------------------------------------
+# 4. FastAPI/Uvicorn/Runtime Files
+# ----------------------------------------------------------------------
+# Environment variables containing secrets (CRITICAL)
 .env
+.env.*.local
+*.ini # Configuration files that might contain secrets
+
+# Uvicorn/Runtime logs
+*.log
+
+# Database files (sqlite)
+*.db
+*.sqlite
