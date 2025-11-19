@@ -5,31 +5,16 @@
 
 
 
-## 🧱 Architecture
-
-user-service/
-│
-├── main.py                 # FastAPI entrypoint
-├── pyproject.toml        # Project dependencies
-│
-├── app/
-│   ├── config/              # Database setup and configuration
-│   ├── models/              # Database models including Pydantic v2 schemas 
-│   ├── controllers/         # Business logic
-│   └── utils/               # Helpers
-│
-└── tests/
-    └── test_health.py       # Pytest suite for basic endpoint checks
-
-
+## 🧱 Architecture System Design Diagram
+[Placeholder]
 
 ## ⚙️ **Installation & Setup**
 
 ### **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/[]
-cd []
+git clone https://github.com/LunarKhord/user-service.git
+cd user-service
 ```
 
 ### **2. Create and Activate a Virtual Environment**
