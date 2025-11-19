@@ -32,4 +32,4 @@ async def server_health():
 @app.post("/api/v1/users/")
 async def create_user(user_data: User,  db_session:AsyncSession = Depends(get_async_db)):
     save_status = await create_meta_in_table(db_session, user_data)
-    return {"user_data": user_data, "db_session": db_session}
+    return {"user_data": user_data,}

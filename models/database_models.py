@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 from datetime import datetime, timezone
 
 
-from ..config.database import Base
+from config.database import Base
 
 
 """This module, defines the Schema and or fields that the table will contain as colums with restrictions"""
