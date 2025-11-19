@@ -1,8 +1,11 @@
 import logging
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, func
+from sqlalchemy.orm import selectinload, joinedload
 from typing import Dict
 from utils.security.jwt_manager import get_hashed_password
-from models.database_models import User, Preference
+from models.database_models import User, Preference # SQLAlchemy ORM
+from models.user import UserResponse # Pydantic Model
 """
 This module exist as the controller to the database, its purpose is presenting functions that interact with the Database
 """
@@ -53,13 +56,43 @@ async def create_meta_in_table(db_session: AsyncSession, user_meta: User) -> Dic
 
 
 # Receive user id and returns the meata associated with the email
-async def fetch_user_meta_with_email(db_session: AsyncSession, user_email: str):
+async def fetch_user_meta_with_email(user_email: str, db_session: AsyncSession) -> Dict:
 	logger.info("[INFO]: Fetch user by Email.Executed")
-	pass
+	user_orm = select(User)
+	user_email = user_email.strip()
+	try:
+		logger.info(f"[INFO]: A search has been initiated for {user_email}")
+		user_orm = user_orm.where(User.email.ilike(f"{user_email}")).options(selectinload(User.preferences))
+		user_orm = await db_session.execute(user_orm)
+
+		# GET the scalar result a single ORM or NONE
+		db_user_result = user_orm.scalar_one_or_none()
+		logger.info(f"[INFO]: {user_email} fetched meta: {db_user_result}")
+		# Pass the ORM object into a Pydantic Model.
+		pydantic_payload = UserResponse.model_validate(db_user_result)
+		return pydantic_payload.model_dump()
+
+	except Exception as e:
+		raise e
 
 
 
 # Receive user id and return the meata associated with the id
 async def fetch_user_meta_with_id(db_session: AsyncSession, user_id: str):
 	logger.info("[INFO]: Fetch user by ID.Executed")
-	pass
+	user_orm = select(User)
+	user_email = user_email.strip()
+	try:
+		logger.info(f"[INFO]: A search has been initiated for {user_id}")
+		user_orm = user_orm.where(User.id.ilike(f"{user_id}")).options(selectinload(User.preferences))
+		user_orm = await db_session.execute(user_orm)
+
+		# GET the scalar result a single ORM or NONE
+		db_user_result = user_orm.scalar_one_or_none()
+		logger.info(f"[INFO]: {user_id} fetched meta: {db_user_result}")
+		# Pass the ORM object into a Pydantic Model.
+		pydantic_payload = UserResponse.model_validate(db_user_result)
+		return pydantic_payload.model_dump()
+
+	except Exception as e:
+		raise e

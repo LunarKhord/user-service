@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, HttpUrl, EmailStr
+from pydantic import BaseModel, Field, HttpUrl, EmailStr, ConfigDict
 from typing import Literal, Optional, List, Dict, Any
 from uuid import UUID
 from enum import Enum
@@ -17,3 +17,22 @@ class User(BaseModel):
 	push_token: Optional[str]  # can be updated with an update endpoint
 	preferences: UserPreference
 	password: str = Field(..., description="The password set by the user")
+
+
+
+
+
+class PreferenceResponse(BaseModel):
+	email: bool
+	push: bool
+	model_config = ConfigDict(from_attributes=True)
+
+
+
+class UserResponse(BaseModel):
+	name: str = Field(..., description="The name of the user")
+	email: EmailStr = Field(..., description="The email of the user")
+	push_token: Optional[str]  # can be updated with an update endpoint
+	preferences: PreferenceResponse
+
+	model_config = ConfigDict(from_attributes=True)
