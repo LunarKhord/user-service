@@ -13,7 +13,7 @@ class UserPreference(BaseModel):
 
 class User(BaseModel):
 	name: str = Field(..., description="The name of the user")
-	email: str = Field(..., description="The email of the user")
+	email: EmailStr = Field(..., description="The email of the user")
 	push_token: Optional[str]  # can be updated with an update endpoint
 	preferences: UserPreference
 	password: str = Field(..., description="The password set by the user")

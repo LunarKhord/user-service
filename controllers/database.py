@@ -1,8 +1,6 @@
 import logging
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Dict
-
-
 from utils.security.jwt_manager import get_hashed_password
 from models.database_models import User, Preference
 """
@@ -54,7 +52,14 @@ async def create_meta_in_table(db_session: AsyncSession, user_meta: User) -> Dic
 		print(e)
 
 
-# This function receives a user id or a way to identify them
-# And returns their full Meta.
-async def fetch_user_meta_with_id():
+# Receive user id and returns the meata associated with the email
+async def fetch_user_meta_with_email(db_session: AsyncSession, user_email: str):
+	logger.info("[INFO]: Fetch user by Email.Executed")
+	pass
+
+
+
+# Receive user id and return the meata associated with the id
+async def fetch_user_meta_with_id(db_session: AsyncSession, user_id: str):
+	logger.info("[INFO]: Fetch user by ID.Executed")
 	pass

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, Request, HTTPException, status
+from pydantic import EmailStr
 from contextlib import asynccontextmanager
 import logging
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -24,12 +25,26 @@ async def lifespan(app:FastAPI):
 app = FastAPI(title="User-Service", lifespan=lifespan)
 
 
+# Return the current state of the server and its external dependencies
 @app.get("/health")
 async def server_health():
     pass
 
 
+# A POST request endpoint
 @app.post("/api/v1/users/")
 async def create_user(user_data: User,  db_session:AsyncSession = Depends(get_async_db)):
     save_status = await create_meta_in_table(db_session, user_data)
     return {"user_data": user_data,}
+
+
+# A GET request by email endpoint
+@app.get("/api/v1/users/{user_email}")
+async def get_user(user_email: EmailStr):
+    print(user_email)
+
+
+# A GET request by id endpoint
+@app.get("/api/v1/users/{user_id}")
+async def get_user(user_id: str):
+    print(user_id)
